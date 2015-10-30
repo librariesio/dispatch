@@ -1,1 +1,1 @@
-web: ruby dispatch.rb
+worker: ruby dispatch.rb
