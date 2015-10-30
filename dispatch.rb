@@ -18,7 +18,7 @@ EM.run do
       p 'pubic'
       Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubCreateWorker', 'args' => [data['repo']['name'], nil])
     when 'ReleaseEvent'
-      puts 'new release'
+      # puts 'new release'
     when 'CreateEvent'
       thing = data['payload']['ref_type']
       if thing == 'tag'
