@@ -14,7 +14,7 @@ EM.run do
     when 'WatchEvent'
       puts 'new star'
     when 'PublicEvent'
-      p Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubCreateWorker', 'args' => [data['repo']['name'], nil])
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubCreateWorker', 'args' => [data['repo']['name'], nil])
     when 'ReleaseEvent'
       puts 'new release'
     when 'CreateEvent'
@@ -22,7 +22,7 @@ EM.run do
       if thing == 'tag'
         puts 'new tag'
       elsif thing == 'repository'
-        p Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubCreateWorker', 'args' => [data['repo']['name'], nil])
+        Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubCreateWorker', 'args' => [data['repo']['name'], nil])
       end
     end
   end
