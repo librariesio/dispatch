@@ -22,7 +22,8 @@ EM.run do
     when 'CreateEvent'
       thing = data['payload']['ref_type']
       if thing == 'tag'
-        puts 'new tag'
+        p 'new tag'
+        Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubTagWorker', 'args' => [data['repo']['name'], nil])
       elsif thing == 'repository'
         p 'new repo'
         Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubCreateWorker', 'args' => [data['repo']['name'], nil])
