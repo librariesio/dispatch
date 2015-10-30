@@ -12,7 +12,7 @@ EM.run do
     data = JSON.parse(message)
     case data['type']
     when 'WatchEvent'
-      puts 'new star'
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubStarWorker', 'args' => [data['repo']['name'], nil])
     when 'PublicEvent'
       Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubCreateWorker', 'args' => [data['repo']['name'], nil])
     when 'ReleaseEvent'
