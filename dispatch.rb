@@ -33,8 +33,6 @@ EM.run do
   source.start
 end
 
-# WatchEvent => star
-# PublicEvent => new repo
 # ReleaseEvent => new release
 # CreateEvent => new (repo/branch/tag)
 
@@ -47,8 +45,6 @@ end
 # IssueCommentEvent
 # IssuesEvent
 # MemberEvent
-# PublicEvent
 # PullRequestEvent
 # PullRequestReviewCommentEvent
 # ReleaseEvent
-# WatchEvent
