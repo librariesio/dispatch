@@ -18,7 +18,11 @@ EM.run do
       p 'pubic'
       Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubCreateWorker', 'args' => [data['repo']['name'], nil])
     when 'ReleaseEvent'
-      # puts 'new release'
+      p 'new release'
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+    when 'ForkEvent'
+      p 'new fork'
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
     when 'CreateEvent'
       thing = data['payload']['ref_type']
       if thing == 'tag'
@@ -34,18 +38,12 @@ EM.run do
   source.start
 end
 
-# ReleaseEvent => new release
-# CreateEvent => new (repo/branch/tag)
-
 # PushEvent
 # CommitCommentEvent
-# CreateEvent
 # DeleteEvent
-# ForkEvent
 # GollumEvent
 # IssueCommentEvent
 # IssuesEvent
 # MemberEvent
 # PullRequestEvent
 # PullRequestReviewCommentEvent
-# ReleaseEvent
