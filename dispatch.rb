@@ -23,6 +23,18 @@ EM.run do
     when 'ForkEvent'
       p 'new fork'
       Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+    when 'IssuesEvent'
+      case data['payload']['action']
+      when 'opened', 'closed', 'reopened'
+        p "Issue #{data['payload']['action']} #{data['repo']['name']}"
+        Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+      end
+    when 'PullRequestEvent'
+      case data['payload']['action']
+      when 'opened', 'closed', 'reopened'
+        p "Pull Request #{data['payload']['action']} #{data['repo']['name']}"
+        # Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+      end
     when 'CreateEvent'
       thing = data['payload']['ref_type']
       if thing == 'tag'
