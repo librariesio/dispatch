@@ -2,7 +2,7 @@ require 'em-eventsource'
 require 'sidekiq'
 
 EM.run do
-  source = EM::EventSource.new("http://github-firehose.herokuapp.com/events")
+  source = EM::EventSource.new(ENV["FIREHOSE_URL"])
 
   source.error do |error|
     puts "error #{error}"
