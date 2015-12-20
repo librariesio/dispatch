@@ -1,24 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.8)
-    celluloid (0.17.2)
-      celluloid-essentials
-      celluloid-extras
-      celluloid-fsm
-      celluloid-pool
-      celluloid-supervision
-      timers (>= 4.1.1)
-    celluloid-essentials (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-extras (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-fsm (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-pool (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-supervision (0.20.5)
-      timers (>= 4.1.1)
+    addressable (2.4.0)
+    concurrent-ruby (1.0.0)
     connection_pool (2.2.0)
     cookiejar (0.3.2)
     em-eventsource (0.2.1)
@@ -33,20 +17,14 @@ GEM
     em-socksify (0.3.1)
       eventmachine (>= 1.0.0.beta.4)
     eventmachine (1.0.8)
-    hitimes (1.2.3)
     http_parser.rb (0.6.0)
     json (1.8.3)
-    redis (3.2.1)
-    redis-namespace (1.5.2)
-      redis (~> 3.0, >= 3.0.4)
-    sidekiq (3.5.2)
-      celluloid (~> 0.17.2)
+    redis (3.2.2)
+    sidekiq (4.0.1)
+      concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
       json (~> 1.0)
       redis (~> 3.2, >= 3.2.1)
-      redis-namespace (~> 1.5, >= 1.5.2)
-    timers (4.1.1)
-      hitimes
 
 PLATFORMS
   ruby
@@ -56,4 +34,4 @@ DEPENDENCIES
   sidekiq
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
