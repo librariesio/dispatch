@@ -25,13 +25,13 @@ EM.run do
       Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
     when 'IssuesEvent'
       case data['payload']['action']
-      when 'opened', 'closed', 'reopened'
+      when 'opened', 'closed', 'reopened', 'labeled', 'unlabeled', 'edited'
         p "Issue #{data['payload']['action']} #{data['repo']['name']}"
         Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
       end
     when 'PullRequestEvent'
       case data['payload']['action']
-      when 'opened', 'closed', 'reopened'
+      when 'opened', 'closed', 'reopened', 'labeled', 'unlabeled', 'edited'
         p "Pull Request #{data['payload']['action']} #{data['repo']['name']}"
         # Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
       end
