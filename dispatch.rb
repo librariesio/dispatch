@@ -36,7 +36,7 @@ EM.run do
       case data['payload']['action']
       when 'opened', 'closed', 'reopened', 'labeled', 'unlabeled', 'edited'
         p "Pull Request #{data['payload']['action']} #{data['repo']['name']}"
-        # Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+        Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
       end
     when 'CreateEvent'
       thing = data['payload']['ref_type']
