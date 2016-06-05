@@ -11,6 +11,9 @@ EM.run do
   source.on "event" do |message|
     data = JSON.parse(message)
     case data['type']
+    when 'RepositoryEvent'
+      p 'RepositoryEvent'
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
     when 'WatchEvent'
       p 'star'
       Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubStarWorker', 'args' => [data['repo']['name'], nil])
