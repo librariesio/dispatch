@@ -52,13 +52,3 @@ EM.run do
 
   source.start
 end
-
-# PushEvent
-# CommitCommentEvent
-# DeleteEvent
-# GollumEvent
-# IssueCommentEvent
-# IssuesEvent
-# MemberEvent
-# PullRequestEvent
-# PullRequestReviewCommentEvent
