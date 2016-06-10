@@ -30,14 +30,17 @@ EM.run do
       case data['payload']['action']
       when 'opened', 'closed', 'reopened', 'labeled', 'unlabeled', 'edited'
         p "Issue #{data['payload']['action']} #{data['repo']['name']}"
-        Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+        Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubIssueWorker', 'args' => [data['repo']['name'], data['payload']['issue']['number'],nil])
       end
     when 'PullRequestEvent'
       case data['payload']['action']
       when 'opened', 'closed', 'reopened', 'labeled', 'unlabeled', 'edited'
         p "Pull Request #{data['payload']['action']} #{data['repo']['name']}"
-        Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+        Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubIssueWorker', 'args' => [data['repo']['name'], data['payload']['pull_request']['number'], nil])
       end
+    when 'IssueCommentEvent'
+      p 'new issue comment'
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubIssueWorker', 'args' => [data['repo']['name'], data['payload']['issue']['number'],nil])
     when 'CreateEvent'
       thing = data['payload']['ref_type']
       if thing == 'tag'
