@@ -8,7 +8,7 @@ GEM
     em-eventsource (0.2.1)
       em-http-request (~> 1.0)
       eventmachine (~> 1.0)
-    em-http-request (1.1.4)
+    em-http-request (1.1.5)
       addressable (>= 2.3.4)
       cookiejar (!= 0.3.1)
       em-socksify (>= 0.3)
