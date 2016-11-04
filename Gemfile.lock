@@ -1,7 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.4.0)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
     cookiejar (0.3.3)
@@ -18,11 +19,12 @@ GEM
       eventmachine (>= 1.0.0.beta.4)
     eventmachine (1.2.0.1)
     http_parser.rb (0.6.0)
+    public_suffix (2.0.3)
     rack (2.0.1)
     rack-protection (1.5.3)
       rack
     redis (3.3.1)
-    sidekiq (4.2.4)
+    sidekiq (4.2.5)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
