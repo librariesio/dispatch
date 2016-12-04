@@ -25,7 +25,7 @@ EM.run do
       Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
     when 'ForkEvent'
       p 'new fork'
-      # Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
     when 'IssuesEvent'
       case data['payload']['action']
       when 'opened', 'closed', 'reopened', 'labeled', 'unlabeled', 'edited'
@@ -40,7 +40,7 @@ EM.run do
       end
     when 'IssueCommentEvent'
       p 'new issue comment'
-      # Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubIssueWorker', 'args' => [data['repo']['name'], data['payload']['issue']['number'],nil])
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubIssueWorker', 'args' => [data['repo']['name'], data['payload']['issue']['number'],nil])
     when 'CreateEvent'
       thing = data['payload']['ref_type']
       if thing == 'tag'
