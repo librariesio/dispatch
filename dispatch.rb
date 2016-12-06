@@ -25,7 +25,7 @@ EM.run do
       Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
     when 'ForkEvent'
       p 'new fork'
-      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+      # Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
     when 'IssuesEvent'
       case data['payload']['action']
       when 'opened', 'closed', 'reopened', 'labeled', 'unlabeled', 'edited'
