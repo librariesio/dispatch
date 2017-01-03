@@ -19,7 +19,7 @@ GEM
       eventmachine (>= 1.0.0.beta.4)
     eventmachine (1.2.1)
     http_parser.rb (0.6.0)
-    public_suffix (2.0.4)
+    public_suffix (2.0.5)
     rack (2.0.1)
     rack-protection (1.5.3)
       rack
