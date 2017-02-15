@@ -13,19 +13,19 @@ EM.run do
     case data['type']
     when 'RepositoryEvent'
       p 'RepositoryEvent'
-      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'CreateRepositoryWorker', 'args' => ['GitHub', data['repo']['name'], nil])
     when 'WatchEvent'
       p 'star'
       Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubStarWorker', 'args' => [data['repo']['name'], nil])
     when 'PublicEvent'
       p 'pubic'
-      Sidekiq::Client.push('queue' => 'low', 'class' => 'CreateRepositoryWorker', 'args' => [data['repo']['name'], nil])
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'CreateRepositoryWorker', 'args' => ['GitHub', data['repo']['name'], nil])
     when 'ReleaseEvent'
       p 'new release'
-      Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+      Sidekiq::Client.push('queue' => 'low', 'class' => 'CreateRepositoryWorker', 'args' => ['GitHub', data['repo']['name'], nil])
     when 'ForkEvent'
       p 'new fork'
-      # Sidekiq::Client.push('queue' => 'low', 'class' => 'GithubUpdateWorker', 'args' => [data['repo']['name'], nil])
+      # Sidekiq::Client.push('queue' => 'low', 'class' => 'CreateRepositoryWorker', 'args' => ['GitHub', data['repo']['name'], nil])
     when 'IssuesEvent'
       case data['payload']['action']
       when 'opened', 'closed', 'reopened', 'labeled', 'unlabeled', 'edited'
@@ -48,7 +48,7 @@ EM.run do
         Sidekiq::Client.push('queue' => 'low', 'class' => 'TagWorker', 'args' => [data['repo']['name'], nil])
       elsif thing == 'repository'
         p 'new repo'
-        Sidekiq::Client.push('queue' => 'low', 'class' => 'CreateRepositoryWorker', 'args' => [data['repo']['name'], nil])
+        Sidekiq::Client.push('queue' => 'low', 'class' => 'CreateRepositoryWorker', 'args' => ['GitHub', data['repo']['name'], nil])
       end
     end
   end
