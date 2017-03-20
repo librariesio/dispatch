@@ -2,11 +2,24 @@ require 'em-eventsource'
 require 'json'
 
 class EventSender
-  def initialize
-    @connection = EventMachine::HttpRequest.new(ENV["EVENT_HOOK_URL"])
+  def initialize(url)
+    @connection = EventMachine::HttpRequest.new(url)
   end
 
-  def parse(message)
+  def send_event(headers: {}, params: {})
+    @connection.post({
+      body: JSON.dump(params),
+      head: { "Content-Type" => "application/json" }.merge(headers)
+    })
+  end
+end
+
+class GithubProcessor
+  def initialize(url)
+    @sender = EventSender.new(url)
+  end
+
+  def process(message)
     data = JSON.parse(message)
 
     case data['type']
@@ -65,22 +78,23 @@ class EventSender
     end
   end
 
+  private
+
   def send_event(name, params = {})
     puts "Sending '#{name}' event"
-    @connection.post({
-      body: JSON.dump(params),
-      head: {
-        "Content-Type" => "application/json",
-        "X-GitHub-Event" => name
-      }
-    })
+
+    @sender.send_event(
+      headers: { "X-GitHub-Event" => name },
+      params: params
+    )
   end
 end
 
 EM.run do
-  sender = EventSender.new
+  # Github event processing
+  github = GithubProcessor.new(ENV["EVENT_HOOK_URL"])
   source = EM::EventSource.new(ENV["FIREHOSE_URL"])
-  source.on "event", &sender.method(:parse)
+  source.on "event", &github.method(:process)
   source.error {|e| puts "error #{e}" }
   source.start
 end
