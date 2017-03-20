@@ -3,8 +3,6 @@ GEM
   specs:
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
-    concurrent-ruby (1.0.5)
-    connection_pool (2.2.1)
     cookiejar (0.3.3)
     em-eventsource (0.2.1)
       em-http-request (~> 1.0)
@@ -20,26 +18,15 @@ GEM
     eventmachine (1.2.3)
     http_parser.rb (0.6.0)
     public_suffix (2.0.5)
-    rack (2.0.1)
-    rack-protection (1.5.3)
-      rack
-    redis (3.3.3)
-    sidekiq (4.2.9)
-      concurrent-ruby (~> 1.0)
-      connection_pool (~> 2.2, >= 2.2.0)
-      rack-protection (>= 1.5.0)
-      redis (~> 3.2, >= 3.2.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   em-eventsource
-  redis
-  sidekiq
 
 RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.5
+   1.14.6
