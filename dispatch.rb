@@ -201,6 +201,8 @@ class Watcher
   end
 
   def with_rss_names(url, platform, &block)
+    cached_names = @cache.fetch(url) { [] }
+
     request = RestClient.get(url)
     names = SimpleRSS.parse(request.body).entries.map(&:title)
 
@@ -214,10 +216,9 @@ class Watcher
       end
     end
 
-    cached_names = []
     yield (names - cached_names)
 
-    #@cache.set(url, names)
+    @cache.set(url, names)
   end
 end
 
