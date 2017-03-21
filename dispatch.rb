@@ -1,5 +1,6 @@
 require 'em-eventsource'
 require 'json'
+require 'dalli'
 
 class EventSender
   def initialize(url)
@@ -104,8 +105,21 @@ class Watcher
     ['https://hex.pm/api/packages?sort=updated_at', 'Hex']
   ]
 
+  MEMCACHED_OPTIONS = {
+    server: (ENV["MEMCACHIER_SERVERS"] || "localhost:11211").split(","),
+    username: ENV["MEMCACHIER_USERNAME"],
+    password: ENV["MEMCACHIER_PASSWORD"],
+    failover: true,
+    socket_timeout: 1.5,
+    socket_failure_delay: 0.2
+  }
+
   def initialize(url)
     @sender = EventSender.new(url)
+    @cache = Dalli::Client.new(
+      MEMCACHED_OPTIONS[:server],
+      MEMCACHED_OPTIONS.select { |k, v| k != :server }
+    )
   end
 
   def call
@@ -135,6 +149,8 @@ class Watcher
   end
 
   def with_json_names(url, platform, &block)
+    cached_names = @cache.fetch(url) { [] }
+
     request = EventMachine::HttpRequest.new(url)
       .get({
       head: { "User-Agent" => "Libraries.io Watcher" }
@@ -157,11 +173,9 @@ class Watcher
         names = json.map{|g| g['name']}.uniq
       end
 
-      update_names = []
+      yield (names - cached_names)
 
-      yield ((names - update_names))
-
-      #dc.set(url, names)
+      @cache.set(url, names)
     end
   end
 end

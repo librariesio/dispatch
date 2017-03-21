@@ -4,6 +4,7 @@ GEM
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
     cookiejar (0.3.3)
+    dalli (2.7.6)
     em-eventsource (0.2.1)
       em-http-request (~> 1.0)
       eventmachine (~> 1.0)
@@ -23,6 +24,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dalli
   em-eventsource
 
 RUBY VERSION
