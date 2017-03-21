@@ -92,7 +92,7 @@ end
 
 EM.run do
   # Github event processing
-  github = GithubProcessor.new(ENV["EVENT_HOOK_URL"])
+  github = GithubProcessor.new(ENV["GITHUB_HOOK_URL"])
   source = EM::EventSource.new(ENV["FIREHOSE_URL"])
   source.on "event", &github.method(:process)
   source.error {|e| puts "error #{e}" }
