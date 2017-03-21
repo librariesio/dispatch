@@ -33,4 +33,4 @@ rbenv global 2.4.0
 
 ## Copyright
 
-Copyright (c) 2016 Andrew Nesbitt. See [LICENSE](https://github.com/librariesio/dispatch/blob/master/LICENSE) for details.
+Copyright (c) 2017 Andrew Nesbitt. See [LICENSE](https://github.com/librariesio/dispatch/blob/master/LICENSE) for details.
