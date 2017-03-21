@@ -162,18 +162,23 @@ class Watcher
   end
 
   def with_names(url, platform, type, &block)
-    if type == :json
-      with_json_names(url, platform, &block)
-    elsif type == :rss
-      with_rss_names(url, platform, &block)
-    end
-  end
-
-  def with_json_names(url, platform, &block)
     cached_names = @cache.fetch(url) { [] }
 
     request = RestClient.get(url, { "User-Agent" => "Libraries.io Watcher" })
-    json = JSON.parse(request.body)
+
+    if type == :json
+      names = with_json_names(request.body, platform)
+    elsif type == :rss
+      names = with_rss_names(request.body, platform)
+    end
+
+    yield (names - cached_names)
+
+    @cache.set(url, names)
+  end
+
+  def with_json_names(request_body, platform)
+    json = JSON.parse(request_body)
 
     if platform == 'Elm'
       names = json
@@ -189,18 +194,12 @@ class Watcher
       names = json.map{|g| g['name']}.uniq
     end
 
-    yield (names - cached_names)
-
-    @cache.set(url, names)
+    names
   end
 
-  def with_rss_names(url, platform, &block)
-    cached_names = @cache.fetch(url) { [] }
-
-    request = RestClient.get(url)
-    names = SimpleRSS.parse(request.body).entries.map(&:title)
-
-    names = names.map do |name|
+  def with_rss_names(request_body, platform)
+    names = SimpleRSS.parse(request_body).entries.map(&:title)
+    names.map do |name|
       if platform == 'Pub' && name
         name.split(' ').last
       elsif platform == 'CocoaPods' && name
@@ -209,10 +208,6 @@ class Watcher
         name.split(' ').first
       end
     end
-
-    yield (names - cached_names)
-
-    @cache.set(url, names)
   end
 end
 
