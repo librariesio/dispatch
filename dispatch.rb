@@ -6,15 +6,15 @@ require 'rest-client'
 
 class EventSender
   def initialize(url)
-    @connection = EventMachine::HttpRequest.new(url)
+    @url = url
   end
 
   def send_event(headers: {}, params: {})
-    #puts "send_event: #{@connection.uri}"
-    @connection.post({
-      body: JSON.dump(params),
-      head: { "Content-Type" => "application/json" }.merge(headers)
-    })
+    RestClient.post(
+      @url,
+      JSON.dump(params),
+      { "Content-Type" => "application/json" }.merge(headers)
+    )
   end
 end
 
@@ -104,8 +104,8 @@ class Watcher
     ['http://package.elm-lang.org/new-packages', 'Elm'],
     ['https://crates.io/summary', 'Cargo'],
     ['http://api.metacpan.org/v0/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
-    ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
-    ['https://hex.pm/api/packages?sort=updated_at', 'Hex']
+    #['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
+    #['https://hex.pm/api/packages?sort=updated_at', 'Hex']
   ]
 
   MEMCACHED_OPTIONS = {
@@ -138,9 +138,9 @@ class Watcher
   end
 
   def call
-    #JSON_SERVICES.each do |service|
-      #process(*service, :json)
-    #end
+    JSON_SERVICES.each do |service|
+      process(*service, :json)
+    end
 
     RSS_SERVICES.each do |service|
       process(*service, :rss)
@@ -172,32 +172,26 @@ class Watcher
   def with_json_names(url, platform, &block)
     cached_names = @cache.fetch(url) { [] }
 
-    request = EventMachine::HttpRequest.new(url)
-      .get({
-      head: { "User-Agent" => "Libraries.io Watcher" }
-    })
+    request = RestClient.get(url, { "User-Agent" => "Libraries.io Watcher" })
+    json = JSON.parse(request.body)
 
-    request.callback do
-      json = JSON.parse(request.response)
-
-      if platform == 'Elm'
-        names = json
-      elsif platform == 'NPM'
-        names = json
-      elsif platform == 'Cargo'
-        updated_names = json['just_updated'].map{|c| c['name']}
-        new_names = json['new_crates'].map{|c| c['name']}
-        names = (updated_names + new_names).uniq
-      elsif platform == 'CPAN'
-        names = json['hits']['hits'].map{|project| project['fields']['distribution'] }.uniq
-      else
-        names = json.map{|g| g['name']}.uniq
-      end
-
-      yield (names - cached_names)
-
-      @cache.set(url, names)
+    if platform == 'Elm'
+      names = json
+    elsif platform == 'NPM'
+      names = json
+    elsif platform == 'Cargo'
+      updated_names = json['just_updated'].map{|c| c['name']}
+      new_names = json['new_crates'].map{|c| c['name']}
+      names = (updated_names + new_names).uniq
+    elsif platform == 'CPAN'
+      names = json['hits']['hits'].map{|project| project['fields']['distribution'] }.uniq
+    else
+      names = json.map{|g| g['name']}.uniq
     end
+
+    yield (names - cached_names)
+
+    @cache.set(url, names)
   end
 
   def with_rss_names(url, platform, &block)
