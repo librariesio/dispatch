@@ -1,6 +1,8 @@
 require 'em-eventsource'
 require 'json'
 require 'dalli'
+require 'simple-rss'
+require 'rest-client'
 
 class EventSender
   def initialize(url)
@@ -8,6 +10,7 @@ class EventSender
   end
 
   def send_event(headers: {}, params: {})
+    #puts "send_event: #{@connection.uri}"
     @connection.post({
       body: JSON.dump(params),
       head: { "Content-Type" => "application/json" }.merge(headers)
@@ -114,6 +117,18 @@ class Watcher
     socket_failure_delay: 0.2
   }
 
+  RSS_SERVICES = [
+    ['http://packagist.org/feeds/releases.rss', 'Packagist'],
+    ['http://packagist.org/feeds/packages.rss', 'Packagist'],
+    ['http://hackage.haskell.org/packages/recent.rss', 'Hackage'],
+    ['http://lib.haxe.org/rss/', 'Haxelib'],
+    ['http://pypi.python.org/pypi?%3Aaction=rss', 'Pypi'],
+    ['http://pypi.python.org/pypi?%3Aaction=packages_rss', 'Pypi'],
+    ['http://pub.dartlang.org/feed.atom', 'Pub'],
+    ['http://melpa.org/updates.rss', 'Emacs'],
+    ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods']
+  ]
+
   def initialize(url)
     @sender = EventSender.new(url)
     @cache = Dalli::Client.new(
@@ -123,8 +138,12 @@ class Watcher
   end
 
   def call
-    JSON_SERVICES.each do |service|
-      process(*service, :json)
+    #JSON_SERVICES.each do |service|
+      #process(*service, :json)
+    #end
+
+    RSS_SERVICES.each do |service|
+      process(*service, :rss)
     end
   end
 
@@ -145,6 +164,8 @@ class Watcher
   def with_names(url, platform, type, &block)
     if type == :json
       with_json_names(url, platform, &block)
+    elsif type == :rss
+      with_rss_names(url, platform, &block)
     end
   end
 
@@ -177,6 +198,26 @@ class Watcher
 
       @cache.set(url, names)
     end
+  end
+
+  def with_rss_names(url, platform, &block)
+    request = RestClient.get(url)
+    names = SimpleRSS.parse(request.body).entries.map(&:title)
+
+    names = names.map do |name|
+      if platform == 'Pub' && name
+        name.split(' ').last
+      elsif platform == 'CocoaPods' && name
+        name.split(' ')[1]
+      elsif name
+        name.split(' ').first
+      end
+    end
+
+    cached_names = []
+    yield (names - cached_names)
+
+    #@cache.set(url, names)
   end
 end
 

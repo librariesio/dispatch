@@ -3,8 +3,11 @@ GEM
   specs:
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
+    coderay (1.1.1)
     cookiejar (0.3.3)
     dalli (2.7.6)
+    domain_name (0.5.20170223)
+      unf (>= 0.0.5, < 1.0.0)
     em-eventsource (0.2.1)
       em-http-request (~> 1.0)
       eventmachine (~> 1.0)
@@ -17,8 +20,28 @@ GEM
     em-socksify (0.3.1)
       eventmachine (>= 1.0.0.beta.4)
     eventmachine (1.2.3)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     http_parser.rb (0.6.0)
+    method_source (0.8.2)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
+    netrc (0.11.0)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     public_suffix (2.0.5)
+    rest-client (2.0.1)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
+    simple-rss (1.3.1)
+    slop (3.6.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.2)
 
 PLATFORMS
   ruby
@@ -26,6 +49,9 @@ PLATFORMS
 DEPENDENCIES
   dalli
   em-eventsource
+  pry
+  rest-client
+  simple-rss
 
 RUBY VERSION
    ruby 2.4.0p0
