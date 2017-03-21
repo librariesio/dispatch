@@ -5,5 +5,3 @@ gem 'dalli'
 gem 'em-eventsource'
 gem 'simple-rss'
 gem 'rest-client'
-
-gem 'pry'
