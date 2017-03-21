@@ -1,11 +1,11 @@
-# [GitHub-Dispatch](https://libraries.io/github/librariesio/github-dispatch)
+# [Dispatch](https://libraries.io/github/librariesio/dispatch)
 
-Ruby app for enqueuing sidekiq jobs for [Libraries.io](https://libraries.io) from events emitted by the [GitHub firehose](https://libraries.io/github/librariesio/github-firehose).
+Ruby app for dispatching events from various sources into [Libraries.io](https://libraries.io) job queue.
 
 ## Development
 
-Source hosted at [GitHub](http://github.com/librariesio/github-dispatch).
-Report issues/feature requests on [GitHub Issues](http://github.com/librariesio/github-dispatch/issues). Follow us on Twitter [@librariesio](https://twitter.com/librariesio). We also hangout on [Gitter](https://gitter.im/librariesio/support).
+Source hosted at [GitHub](http://github.com/librariesio/dispatch).
+Report issues/feature requests on [GitHub Issues](http://github.com/librariesio/dispatch/issues). Follow us on Twitter [@librariesio](https://twitter.com/librariesio). We also hangout on [Gitter](https://gitter.im/librariesio/support).
 
 ### Getting Started
 
@@ -33,4 +33,4 @@ rbenv global 2.4.0
 
 ## Copyright
 
-Copyright (c) 2016 Andrew Nesbitt. See [LICENSE](https://github.com/librariesio/github-dispatch/blob/master/LICENSE) for details.
+Copyright (c) 2016 Andrew Nesbitt. See [LICENSE](https://github.com/librariesio/dispatch/blob/master/LICENSE) for details.
