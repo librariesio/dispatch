@@ -104,8 +104,8 @@ class Watcher
     ['http://package.elm-lang.org/new-packages', 'Elm'],
     ['https://crates.io/summary', 'Cargo'],
     ['http://api.metacpan.org/v0/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
-    #['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
-    #['https://hex.pm/api/packages?sort=updated_at', 'Hex']
+    ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
+    ['https://hex.pm/api/packages?sort=updated_at', 'Hex']
   ]
 
   MEMCACHED_OPTIONS = {
@@ -164,7 +164,12 @@ class Watcher
   def with_names(url, platform, type, &block)
     cached_names = @cache.fetch(url) { [] }
 
-    request = RestClient.get(url, { "User-Agent" => "Libraries.io Watcher" })
+    begin
+      request = RestClient.get(url, { "User-Agent" => "Libraries.io Watcher" })
+    rescue => e
+      puts "Error: #{url} --> #{e}"
+      return []
+    end
 
     if type == :json
       names = with_json_names(request.body, platform)
