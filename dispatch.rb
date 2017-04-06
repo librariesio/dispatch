@@ -15,6 +15,8 @@ class EventSender
       JSON.dump(params),
       { "Content-Type" => "application/json" }.merge(headers)
     )
+  rescue => e
+    puts "Error: #{url} --> #{e}"
   end
 end
 
