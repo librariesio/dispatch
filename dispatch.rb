@@ -13,7 +13,10 @@ class EventSender
     RestClient.post(
       @url,
       JSON.dump(params),
-      { "Content-Type" => "application/json" }.merge(headers)
+      {
+        "Content-Type" => "application/json",
+        "User-Agent" => "Libraries.io Dispatch"
+      }.merge(headers)
     )
   rescue => e
     puts "Error: #{@url} --> #{e}"
