@@ -131,7 +131,8 @@ class Watcher
     ['http://pypi.python.org/pypi?%3Aaction=packages_rss', 'Pypi'],
     ['http://pub.dartlang.org/feed.atom', 'Pub'],
     ['http://melpa.org/updates.rss', 'Emacs'],
-    ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods']
+    ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods'],
+    ['http://www.mvnrepository.com/feeds/rss2.0.xml', 'Maven']
   ]
 
   def initialize(url)
@@ -214,6 +215,8 @@ class Watcher
         name.split(' ').last
       elsif platform == 'CocoaPods' && name
         name.split(' ')[1]
+      elsif platform == 'Maven' && name
+        name.split(' ')[0] + name.split(' ')[1]
       elsif name
         name.split(' ').first
       end
