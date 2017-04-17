@@ -205,7 +205,7 @@ class Watcher
       names = json.map{|g| g['name']}.uniq
     end
 
-    names
+    names.uniq
   end
 
   def with_rss_names(request_body, platform)
@@ -220,7 +220,7 @@ class Watcher
       elsif name
         name.split(' ').first
       end
-    end
+    end.uniq
   end
 end
 
