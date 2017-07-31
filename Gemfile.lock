@@ -18,7 +18,7 @@ GEM
       http_parser.rb (>= 0.6.0)
     em-socksify (0.3.1)
       eventmachine (>= 1.0.0.beta.4)
-    eventmachine (1.2.3)
+    eventmachine (1.2.5)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
@@ -49,4 +49,4 @@ RUBY VERSION
    ruby 2.4.1p0
 
 BUNDLED WITH
-   1.14.6
+   1.15.3
