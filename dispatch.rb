@@ -202,6 +202,8 @@ class Watcher
       names = (updated_names + new_names).uniq
     elsif platform == 'CPAN'
       names = json['hits']['hits'].map{|project| project['fields']['distribution'] }.uniq
+    elsif platform == 'Puppet'
+      names = json['results'].map { |result| result['slug'] }
     else
       names = json.map{|g| g['name']}.uniq
     end
