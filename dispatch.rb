@@ -110,7 +110,8 @@ class Watcher
     ['https://crates.io/summary', 'Cargo'],
     ['https://fastapi.metacpan.org/v1/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
     ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
-    ['https://hex.pm/api/packages?sort=updated_at', 'Hex']
+    ['https://hex.pm/api/packages?sort=updated_at', 'Hex'],
+    ['https://forgeapi.puppetlabs.com/v3/modules?limit=100&sort_by=latest_release', 'Puppet']
   ]
 
   MEMCACHED_OPTIONS = {
