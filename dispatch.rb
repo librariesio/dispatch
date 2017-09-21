@@ -107,7 +107,7 @@ class Watcher
     ['https://atom.io/api/packages?page=1&sort=created_at&direction=desc', 'Atom'],
     ['https://atom.io/api/packages?page=1&sort=updated_at&direction=desc', 'Atom'],
     ['http://package.elm-lang.org/new-packages', 'Elm'],
-    ['https://crates.io/summary', 'Cargo'],
+    ['https://crates.io/api/v1/summary', 'Cargo'],
     ['https://fastapi.metacpan.org/v1/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
     ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
     ['https://hex.pm/api/packages?sort=updated_at', 'Hex'],
