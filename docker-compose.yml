@@ -1,0 +1,16 @@
+version: '2'
+services:
+  memcached:
+    image: memcached:1.5-alpine
+  app:
+    build: ./
+    ports:
+      - 5000:5000
+    links:
+      - memcached
+    environment:
+      PORT: 5000
+      MEMCACHIER_SERVERS: memcached
+      GITHUB_HOOK_URL: https://libraries.io/hooks/github
+      WATCHER_HOOK_URL: https://libraries.io/hooks/package
+      FIREHOSE_URL: http://github-firehose.libraries.io/events
