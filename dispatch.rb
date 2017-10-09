@@ -233,6 +233,7 @@ EM.run do
   # Watcher
   watcher = Watcher.new(ENV["WATCHER_HOOK_URL"])
   EventMachine.add_periodic_timer(30) { watcher.call }
+  watcher.call
 
   # Github event processing
   github = GithubProcessor.new(ENV["GITHUB_HOOK_URL"])
