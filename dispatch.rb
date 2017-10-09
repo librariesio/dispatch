@@ -4,6 +4,8 @@ require 'dalli'
 require 'simple-rss'
 require 'rest-client'
 
+$stdout.sync = true
+
 class EventSender
   def initialize(url)
     @url = url
