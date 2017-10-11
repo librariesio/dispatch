@@ -175,20 +175,20 @@ class Watcher
 
     begin
       request = RestClient.get(url, { "User-Agent" => "Libraries.io Watcher" })
+
+      if type == :json
+        names = with_json_names(request.body, platform)
+      elsif type == :rss
+        names = with_rss_names(request.body, platform)
+      end
+
+      yield (names - cached_names)
+
+      @cache.set(url, names)
     rescue => e
       puts "Error: #{url} --> #{e}"
       return []
     end
-
-    if type == :json
-      names = with_json_names(request.body, platform)
-    elsif type == :rss
-      names = with_rss_names(request.body, platform)
-    end
-
-    yield (names - cached_names)
-
-    @cache.set(url, names)
   end
 
   def with_json_names(request_body, platform)
