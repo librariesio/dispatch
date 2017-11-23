@@ -54,10 +54,10 @@ class GithubProcessor
           "repository" => { "full_name" => data['repo']['name'] }
       })
     when 'ForkEvent'
-      # send_event(
-      #   'repository', {
-      #     "repository" => { "full_name" => data['repo']['name'] }
-      # })
+      send_event(
+        'repository', {
+          "repository" => { "full_name" => data['repo']['name'] }
+      })
     when 'IssuesEvent'
       send_event(
         'issues', {
