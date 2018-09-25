@@ -103,17 +103,17 @@ end
 
 class Watcher
   JSON_SERVICES = [
-    # ['http://npm-update-stream.libraries.io/', 'NPM'],
+    ['http://npm-update-stream.libraries.io/', 'NPM'],
     ['https://rubygems.org/api/v1/activity/just_updated.json', 'Rubygems'],
-    # ['https://rubygems.org/api/v1/activity/latest.json', 'Rubygems'],
-    # ['https://atom.io/api/packages?page=1&sort=created_at&direction=desc', 'Atom'],
-    # ['https://atom.io/api/packages?page=1&sort=updated_at&direction=desc', 'Atom'],
-    # ['http://package.elm-lang.org/new-packages', 'Elm'],
-    # ['https://crates.io/api/v1/summary', 'Cargo'],
-    # ['https://fastapi.metacpan.org/v1/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
-    # ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
-    # ['https://hex.pm/api/packages?sort=updated_at', 'Hex'],
-    # ['https://forgeapi.puppetlabs.com/v3/modules?limit=100&sort_by=latest_release', 'Puppet']
+    ['https://rubygems.org/api/v1/activity/latest.json', 'Rubygems'],
+    ['https://atom.io/api/packages?page=1&sort=created_at&direction=desc', 'Atom'],
+    ['https://atom.io/api/packages?page=1&sort=updated_at&direction=desc', 'Atom'],
+    ['http://package.elm-lang.org/new-packages', 'Elm'],
+    ['https://crates.io/api/v1/summary', 'Cargo'],
+    ['https://fastapi.metacpan.org/v1/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
+    ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
+    ['https://hex.pm/api/packages?sort=updated_at', 'Hex'],
+    ['https://forgeapi.puppetlabs.com/v3/modules?limit=100&sort_by=latest_release', 'Puppet']
   ]
 
   MEMCACHED_OPTIONS = {
@@ -127,15 +127,15 @@ class Watcher
 
   RSS_SERVICES = [
     ['http://packagist.org/feeds/releases.rss', 'Packagist'],
-    # ['http://packagist.org/feeds/packages.rss', 'Packagist'],
-    # ['http://hackage.haskell.org/packages/recent.rss', 'Hackage'],
-    # ['http://lib.haxe.org/rss/', 'Haxelib'],
-    # ['http://pypi.python.org/pypi?%3Aaction=rss', 'Pypi'],
-    # ['http://pypi.python.org/pypi?%3Aaction=packages_rss', 'Pypi'],
-    # ['http://pub.dartlang.org/feed.atom', 'Pub'],
-    # ['http://melpa.org/updates.rss', 'Emacs'],
-    # ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods'],
-    # ['http://www.mvnrepository.com/feeds/rss2.0.xml', 'Maven']
+    ['http://packagist.org/feeds/packages.rss', 'Packagist'],
+    ['http://hackage.haskell.org/packages/recent.rss', 'Hackage'],
+    ['http://lib.haxe.org/rss/', 'Haxelib'],
+    ['http://pypi.python.org/pypi?%3Aaction=rss', 'Pypi'],
+    ['http://pypi.python.org/pypi?%3Aaction=packages_rss', 'Pypi'],
+    ['http://pub.dartlang.org/feed.atom', 'Pub'],
+    ['http://melpa.org/updates.rss', 'Emacs'],
+    ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods'],
+    ['http://www.mvnrepository.com/feeds/rss2.0.xml', 'Maven']
   ]
 
   def initialize(url)
