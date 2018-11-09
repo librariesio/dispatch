@@ -135,7 +135,7 @@ class Watcher
     ['https://pub.dartlang.org/feed.atom', 'Pub'],
     ['https://melpa.org/updates.rss', 'Emacs'],
     ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods'],
-    ['https://www.mvnrepository.com/feeds/rss2.0.xml', 'Maven']
+    ['https://mvnrepository.com/feeds/rss2.0.xml', 'Maven']
   ]
 
   def initialize(url)
