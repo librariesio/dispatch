@@ -126,16 +126,16 @@ class Watcher
   }
 
   RSS_SERVICES = [
-    ['http://packagist.org/feeds/releases.rss', 'Packagist'],
-    ['http://packagist.org/feeds/packages.rss', 'Packagist'],
-    ['http://hackage.haskell.org/packages/recent.rss', 'Hackage'],
-    ['http://lib.haxe.org/rss/', 'Haxelib'],
-    ['http://pypi.python.org/pypi?%3Aaction=rss', 'Pypi'],
-    ['http://pypi.python.org/pypi?%3Aaction=packages_rss', 'Pypi'],
-    ['http://pub.dartlang.org/feed.atom', 'Pub'],
-    ['http://melpa.org/updates.rss', 'Emacs'],
+    ['https://packagist.org/feeds/releases.rss', 'Packagist'],
+    ['https://packagist.org/feeds/packages.rss', 'Packagist'],
+    ['https://hackage.haskell.org/packages/recent.rss', 'Hackage'],
+    ['https://lib.haxe.org/rss/', 'Haxelib'],
+    ['https://pypi.python.org/pypi?%3Aaction=rss', 'Pypi'],
+    ['https://pypi.python.org/pypi?%3Aaction=packages_rss', 'Pypi'],
+    ['https://pub.dartlang.org/feed.atom', 'Pub'],
+    ['https://melpa.org/updates.rss', 'Emacs'],
     ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods'],
-    ['http://www.mvnrepository.com/feeds/rss2.0.xml', 'Maven']
+    ['https://www.mvnrepository.com/feeds/rss2.0.xml', 'Maven']
   ]
 
   def initialize(url)
