@@ -113,7 +113,35 @@ class Watcher
     ['https://fastapi.metacpan.org/v1/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
     ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
     ['https://hex.pm/api/packages?sort=updated_at', 'Hex'],
-    ['https://forgeapi.puppetlabs.com/v3/modules?limit=100&sort_by=latest_release', 'Puppet']
+    ['https://forgeapi.puppetlabs.com/v3/modules?limit=100&sort_by=latest_release', 'Puppet'],
+    ['https://repo.anaconda.com/pkgs/main/linux-64/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/main/linux-32/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/main/linux-ppc64le/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/main/osx-64/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/main/win-64/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/main/win-32/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/main/noarch/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/free/linux-64/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/free/linux-32/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/free/linux-armv6l/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/free/linux-armv7l/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/free/linux-ppc64le/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/free/osx-64/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/free/win-64/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/free/win-32/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/free/noarch/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/r/linux-64/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/r/linux-32/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/r/osx-64/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/r/win-64/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/r/win-32/repodata.json', 'Conda'],
+    ['https://repo.anaconda.com/pkgs/r/noarch/repodata.json', 'Conda'],
+    ['https://conda.anaconda.org/conda-forge/linux-64/repodata.json', 'Conda'],
+    ['https://conda.anaconda.org/conda-forge/linux-ppc64le/repodata.json', 'Conda'],
+    ['https://conda.anaconda.org/conda-forge/osx-64/repodata.json', 'Conda'],
+    ['https://conda.anaconda.org/conda-forge/win-64/repodata.json', 'Conda'],
+    ['https://conda.anaconda.org/conda-forge/win-32/repodata.json', 'Conda'],
+    ['https://conda.anaconda.org/conda-forge/noarch/repodata.json' 'Conda']
   ]
 
   MEMCACHED_OPTIONS = {
@@ -194,20 +222,23 @@ class Watcher
   def with_json_names(request_body, platform)
     json = JSON.parse(request_body)
 
-    if platform == 'Elm'
+    case platform
+    when 'Elm'
       names = json
-    elsif platform == 'NPM'
+    when 'NPM'
       names = json
-    elsif platform == 'Cargo'
+    when 'Cargo'
       updated_names = json['just_updated'].map{|c| c['name']}
       new_names = json['new_crates'].map{|c| c['name']}
       names = (updated_names + new_names).uniq
-    elsif platform == 'CPAN'
-      names = json['hits']['hits'].map{|project| project['fields']['distribution'] }.uniq
-    elsif platform == 'Puppet'
+    when 'Conda'
+      names = json['packages'].map { |build, project| project['name'] }
+    when 'CPAN'
+      names = json['hits']['hits'].map{|project| project['fields']['distribution'] }
+    when 'Puppet'
       names = json['results'].map { |result| result['slug'] }
     else
-      names = json.map{|g| g['name']}.uniq
+      names = json.map{|g| g['name']}
     end
 
     names.uniq
@@ -216,13 +247,14 @@ class Watcher
   def with_rss_names(request_body, platform)
     names = SimpleRSS.parse(request_body).entries.map(&:title)
     names.map do |name|
-      if platform == 'Pub' && name
+      case platform
+      when 'Pub' && name
         name.split(' ').last
-      elsif platform == 'CocoaPods' && name
+      when 'CocoaPods' && name
         name.split(' ')[1]
-      elsif platform == 'Maven' && name
+      when 'Maven' && name
         name.split(' ')[0] + name.split(' ')[1]
-      elsif name
+      when name
         name.split(' ').first
       end
     end.uniq
