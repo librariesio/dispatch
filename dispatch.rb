@@ -221,8 +221,6 @@ class Watcher
         name.split(' ').last
       elsif platform == 'CocoaPods' && name
         name.split(' ')[1]
-      elsif platform == 'Conda' && name
-        name
       elsif platform == 'Maven' && name
         name.split(' ')[0] + name.split(' ')[1]
       elsif name
