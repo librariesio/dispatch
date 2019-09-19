@@ -136,6 +136,7 @@ class Watcher
     ['https://melpa.org/updates.rss', 'Emacs'],
     ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods'],
     ['https://mvnrepository.com/feeds/rss2.0.xml', 'Maven']
+    ['https://conda.libraries.io/feed.rss', 'Conda']
   ]
 
   def initialize(url)
@@ -220,6 +221,8 @@ class Watcher
         name.split(' ').last
       elsif platform == 'CocoaPods' && name
         name.split(' ')[1]
+      elsif platform == 'Conda' && name
+        name
       elsif platform == 'Maven' && name
         name.split(' ')[0] + name.split(' ')[1]
       elsif name
