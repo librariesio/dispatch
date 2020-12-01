@@ -126,8 +126,6 @@ class Watcher
   }
 
   RSS_SERVICES = [
-    ['https://packagist.org/feeds/releases.rss', 'Packagist'],
-    ['https://packagist.org/feeds/packages.rss', 'Packagist'],
     ['https://hackage.haskell.org/packages/recent.rss', 'Hackage'],
     ['https://lib.haxe.org/rss/', 'Haxelib'],
     ['https://pypi.python.org/pypi?%3Aaction=rss', 'Pypi'],
@@ -242,6 +240,6 @@ EM.run do
   source.start
 
   watcher = Watcher.new(ENV["WATCHER_HOOK_URL"])
-  EventMachine.add_periodic_timer(30) { watcher.call }
+  EventMachine.add_periodic_timer(120) { watcher.call }
   watcher.call
 end
