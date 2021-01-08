@@ -3,6 +3,6 @@
 set -e
 
 REVISION=$(git show-ref origin/master | cut -f 1 -d ' ')
-TAGGED_IMAGE=librariesio/dispatch:${REVISION}
+TAGGED_IMAGE=librariesio/dispatch:latest
 
 kubectl set image deployment/dispatch-service dispatch-container=${TAGGED_IMAGE}
