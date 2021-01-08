@@ -104,8 +104,6 @@ end
 class Watcher
   JSON_SERVICES = [
     ['http://npm-update-stream.libraries.io/', 'NPM'],
-    ['https://rubygems.org/api/v1/activity/just_updated.json', 'Rubygems'],
-    ['https://rubygems.org/api/v1/activity/latest.json', 'Rubygems'],
     ['https://atom.io/api/packages?page=1&sort=created_at&direction=desc', 'Atom'],
     ['https://atom.io/api/packages?page=1&sort=updated_at&direction=desc', 'Atom'],
     ['http://package.elm-lang.org/new-packages', 'Elm'],
