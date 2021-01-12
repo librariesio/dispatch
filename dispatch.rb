@@ -103,7 +103,6 @@ end
 
 class Watcher
   JSON_SERVICES = [
-    ['http://npm-update-stream.libraries.io/', 'NPM'],
     ['https://atom.io/api/packages?page=1&sort=created_at&direction=desc', 'Atom'],
     ['https://atom.io/api/packages?page=1&sort=updated_at&direction=desc', 'Atom'],
     ['http://package.elm-lang.org/new-packages', 'Elm'],
@@ -191,8 +190,6 @@ class Watcher
     json = JSON.parse(request_body)
 
     if platform == 'Elm'
-      names = json
-    elsif platform == 'NPM'
       names = json
     elsif platform == 'Cargo'
       updated_names = json['just_updated'].map{|c| c['name']}
