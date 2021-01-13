@@ -105,7 +105,6 @@ class Watcher
   JSON_SERVICES = [
     ['https://atom.io/api/packages?page=1&sort=created_at&direction=desc', 'Atom'],
     ['https://atom.io/api/packages?page=1&sort=updated_at&direction=desc', 'Atom'],
-    ['http://package.elm-lang.org/new-packages', 'Elm'],
     ['https://crates.io/api/v1/summary', 'Cargo'],
     ['https://fastapi.metacpan.org/v1/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
     ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
@@ -189,9 +188,7 @@ class Watcher
   def with_json_names(request_body, platform)
     json = JSON.parse(request_body)
 
-    if platform == 'Elm'
-      names = json
-    elsif platform == 'Cargo'
+    if platform == 'Cargo'
       updated_names = json['just_updated'].map{|c| c['name']}
       new_names = json['new_crates'].map{|c| c['name']}
       names = (updated_names + new_names).uniq
