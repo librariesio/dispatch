@@ -123,8 +123,6 @@ class Watcher
   RSS_SERVICES = [
     ['https://hackage.haskell.org/packages/recent.rss', 'Hackage'],
     ['https://lib.haxe.org/rss/', 'Haxelib'],
-    ['https://pypi.python.org/pypi?%3Aaction=rss', 'Pypi'],
-    ['https://pypi.python.org/pypi?%3Aaction=packages_rss', 'Pypi'],
     ['https://pub.dartlang.org/feed.atom', 'Pub'],
     ['https://melpa.org/updates.rss', 'Emacs'],
     ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods'],
