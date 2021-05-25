@@ -103,8 +103,6 @@ end
 
 class Watcher
   JSON_SERVICES = [
-    ['https://atom.io/api/packages?page=1&sort=created_at&direction=desc', 'Atom'],
-    ['https://atom.io/api/packages?page=1&sort=updated_at&direction=desc', 'Atom'],
     ['https://fastapi.metacpan.org/v1/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
     ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
     ['https://hex.pm/api/packages?sort=updated_at', 'Hex'],
@@ -124,7 +122,6 @@ class Watcher
     ['https://hackage.haskell.org/packages/recent.rss', 'Hackage'],
     ['https://lib.haxe.org/rss/', 'Haxelib'],
     ['https://pub.dartlang.org/feed.atom', 'Pub'],
-    ['https://melpa.org/updates.rss', 'Emacs'],
     ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods'],
     ['https://mvnrepository.com/feeds/rss2.0.xml', 'Maven'],
   ]
