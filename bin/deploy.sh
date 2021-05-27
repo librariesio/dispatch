@@ -2,7 +2,7 @@
 
 set -e
 
-REVISION=$(git show-ref origin/master | cut -c1-7)
+REVISION=$(git show-ref origin/main | cut -c1-7)
 
 echo "Verify ${REVISION} is pushed to Dockerhub before continuing!"
 read -p "Do you see it at https://hub.docker.com/r/librariesio/dispatch/builds [yN]" -n 1 -r
