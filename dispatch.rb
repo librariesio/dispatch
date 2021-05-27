@@ -105,8 +105,7 @@ class Watcher
   JSON_SERVICES = [
     ['https://fastapi.metacpan.org/v1/release/_search?q=status:latest&fields=distribution&sort=date:desc&size=100', 'CPAN'],
     ['https://hex.pm/api/packages?sort=inserted_at', 'Hex'],
-    ['https://hex.pm/api/packages?sort=updated_at', 'Hex'],
-    ['https://forgeapi.puppetlabs.com/v3/modules?limit=100&sort_by=latest_release', 'Puppet']
+    ['https://hex.pm/api/packages?sort=updated_at', 'Hex']
   ]
 
   MEMCACHED_OPTIONS = {
@@ -120,7 +119,6 @@ class Watcher
 
   RSS_SERVICES = [
     ['https://hackage.haskell.org/packages/recent.rss', 'Hackage'],
-    ['https://lib.haxe.org/rss/', 'Haxelib'],
     ['https://pub.dartlang.org/feed.atom', 'Pub'],
     ['http://cocoapods.libraries.io/feed.rss', 'CocoaPods'],
     ['https://mvnrepository.com/feeds/rss2.0.xml', 'Maven'],
@@ -184,8 +182,6 @@ class Watcher
 
     if platform == 'CPAN'
       names = json['hits']['hits'].map{|project| project['fields']['distribution'] }.uniq
-    elsif platform == 'Puppet'
-      names = json['results'].map { |result| result['slug'] }
     else
       names = json.map{|g| g['name']}.uniq
     end
