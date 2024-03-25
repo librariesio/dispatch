@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 ENV RACK_ENV production
 
 COPY Gemfile Gemfile.lock /usr/src/app/
-RUN bundle install --without test --jobs 2
+RUN bundle install --without test --without development --jobs 2
 
 COPY . /usr/src/app
 CMD ruby dispatch.rb
