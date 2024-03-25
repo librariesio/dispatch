@@ -65,7 +65,7 @@ DEPENDENCIES
   zeitwerk
 
 RUBY VERSION
-   ruby 2.7.8p225
+   ruby 3.2.3p157
 
 BUNDLED WITH
    2.1.4
