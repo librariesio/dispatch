@@ -19,6 +19,10 @@ Report issues/feature requests on [GitHub Issues](http://github.com/librariesio/
 * `bundle install`
 * `bundle exec rake` and tests should pass
 
+### Docker
+
+`docker build -t librariesio-dispatch .` to ensure docker builds work correctly.
+
 ### Note on Patches/Pull Requests
 
  * Fork the project.
