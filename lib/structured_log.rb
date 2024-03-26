@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module StructuredLog
-  # See https://github.com/tidelift/design-docs/blob/main/2022-02-backend-logging-conventions.md for conventions
-  #
   # Timing example:
   #
   #  StructuredLog.capture(
