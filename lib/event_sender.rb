@@ -8,7 +8,7 @@ class EventSender
   end
 
   def send_event(headers: {}, params: {})
-    DispatchClient.post(
+    HttpClient.post(
       @url,
       params: params,
       headers: headers

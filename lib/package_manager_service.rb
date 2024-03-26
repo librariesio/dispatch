@@ -24,7 +24,7 @@ class PackageManagerService
   private
 
   def with_unprocessed_names(names_cache:, &block)
-    response = DispatchClient.get(@url)
+    response = HttpClient.get(@url)
 
     parsed_body = @request_parser.parse(response.body)
     names = @request_body_processor.process_names(parsed_body)

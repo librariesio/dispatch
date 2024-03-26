@@ -2,7 +2,7 @@
 
 require 'json'
 
-class DispatchClient
+class HttpClient
   def self.get(url)
     RestClient.get(url, 'User-Agent' => 'Libraries.io Watcher')
   rescue RestClient::ExceptionWithResponse => e
