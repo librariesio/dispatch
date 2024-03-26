@@ -19,6 +19,13 @@ Report issues/feature requests on [GitHub Issues](http://github.com/librariesio/
 * `bundle install`
 * `bundle exec rake` and tests should pass
 
+### Testing
+
+* `bundle exec rake` for RSpec tests
+* `bundle exec lint` for RuboCop
+  * There's still some linting to fix or rules to change
+* `docker-compose build && docker-compose up` to test the server for real
+
 ### Docker
 
 `docker build -t librariesio-dispatch .` to ensure docker builds work correctly.
