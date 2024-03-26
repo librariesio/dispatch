@@ -32,7 +32,6 @@ module StructuredLog
   def self.capture(name, data_hash)
     log(name, data_hash)
   rescue StandardError => e
-    raise e
     logger.warn "Error capturing structured log for metric=#{name} - #{e.message}"
   end
 

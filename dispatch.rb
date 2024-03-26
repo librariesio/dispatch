@@ -12,8 +12,6 @@ loader.setup
 $stdout.sync = true
 
 EM.run do
-  # Watcher
-
   # Github event processing
   github_event_sender = EventSender.new(ENV['GITHUB_HOOK_URL'])
   github = GithubProcessor.new(github_event_sender)
@@ -25,8 +23,8 @@ EM.run do
   # Package manager monitoring
   watcher_event_sender = EventSender.new(ENV['WATCHER_HOOK_URL'])
   cache = MemcachedCache.client
-  names_cache = ProcessedPackageNamesCache.new(cache:)
-  watcher = Watcher.new(event_sender: watcher_event_sender, names_cache:)
+  names_cache = ProcessedPackageNamesCache.new(cache: cache)
+  watcher = Watcher.new(event_sender: watcher_event_sender, names_cache: names_cache)
   EventMachine.add_periodic_timer(120) { watcher.call }
   watcher.call
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe ProcessedPackageNamesCache do
-  subject(:processed_package_names_cache) { described_class.new(cache:) }
+  subject(:processed_package_names_cache) { described_class.new(cache: cache) }
   let(:cache) { double }
 
   let(:existing_name) { 'existing-1' }
@@ -17,7 +17,7 @@ describe ProcessedPackageNamesCache do
     it 'works with the cache and delivers names' do
       yielded_results = []
 
-      processed_package_names_cache.cache_names(url:, names: [existing_name, new_name]) do |names|
+      processed_package_names_cache.cache_names(url: url, names: [existing_name, new_name]) do |names|
         yielded_results = names
       end
 

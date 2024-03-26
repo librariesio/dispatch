@@ -6,7 +6,7 @@ class DispatchClient
   def self.get(url)
     RestClient.get(url, 'User-Agent' => 'Libraries.io Watcher')
   rescue RestClient::ExceptionWithResponse => e
-    StructuredLog.capture('HTTP_CLIENT_ERROR', { url:, status: e.response.code })
+    StructuredLog.capture('HTTP_CLIENT_ERROR', { url: url, status: e.response.code })
 
     raise e
   end
@@ -21,7 +21,7 @@ class DispatchClient
       }.merge(headers)
     )
   rescue RestClient::ExceptionWithResponse => e
-    StructuredLog.capture('HTTP_CLIENT_ERROR', { url:, status: e.response.code })
+    StructuredLog.capture('HTTP_CLIENT_ERROR', { url: url, status: e.response.code })
 
     raise e
   end

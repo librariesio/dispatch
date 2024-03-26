@@ -10,8 +10,8 @@ class EventSender
   def send_event(headers: {}, params: {})
     DispatchClient.post(
       @url,
-      params:,
-      headers:
+      params: params,
+      headers: headers
     )
   rescue StandardError => e
     StructuredLog.capture('EVENT_SENDER_ERROR', { url: @url, message: e.message })

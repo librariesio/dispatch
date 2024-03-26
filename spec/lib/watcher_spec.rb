@@ -2,7 +2,7 @@
 
 describe Watcher do
   describe '#call' do
-    subject(:watcher) { described_class.new(event_sender:, names_cache:) }
+    subject(:watcher) { described_class.new(event_sender: event_sender, names_cache: names_cache) }
     let(:event_sender) { instance_double(EventSender) }
     let(:names_cache) { NamesCache.new }
 

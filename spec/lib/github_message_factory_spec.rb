@@ -154,5 +154,17 @@ describe GithubMessageFactory do
         )
       end
     end
+
+    describe 'Unsupported event' do
+      let(:body) do
+        {
+          'type' => 'whatever'
+        }
+      end
+
+      it 'returns nil' do
+        expect(described_class.build(json_body)).to be(nil)
+      end
+    end
   end
 end

@@ -8,6 +8,8 @@ class GithubProcessor
   def process(json_body)
     event = GithubMessageFactory.build(json_body)
 
+    return unless event
+
     send_event(
       name: event.name,
       params: event.params
@@ -17,11 +19,15 @@ class GithubProcessor
   private
 
   def send_event(name:, params: {})
-    puts "Sending '#{name}' event"
-
     @event_sender.send_event(
       headers: { 'X-GitHub-Event' => name },
-      params:
+      params: params
+    )
+
+    StructuredLog.capture(
+      'GITHUB_EVENT_SEND',
+      event: name,
+      params: params
     )
   end
 end

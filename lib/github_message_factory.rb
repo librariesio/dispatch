@@ -3,6 +3,10 @@
 require 'json'
 
 class GithubMessageFactory
+  # GitHub events from the Firehose have a type. Based on that type, create
+  # a standard message from the parsed GH event.
+  #
+  # @return [GithubMessage]
   def self.build(json_body)
     data = JSON.parse(json_body)
 
@@ -68,6 +72,11 @@ class GithubMessageFactory
           'repository' => { 'full_name' => data['repo']['name'] }
         }
       )
+    else
+      # There are likely many more event types than what we are looking for.
+      # That is not a failure condition.
+
+      nil
     end
   end
 end

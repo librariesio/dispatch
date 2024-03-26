@@ -11,18 +11,30 @@ describe GithubProcessor do
     let(:json_body) { JSON.dump(body) }
     let(:repo_name) { 'repo_name' }
 
+    let(:event_type) { 'RepositoryEvent' }
+
     let(:body) do
-      { 'type' => 'RepositoryEvent', 'repo' => { 'name' => repo_name } }
+      { 'type' => event_type, 'repo' => { 'name' => repo_name } }
     end
 
     before do
-      allow(event_sender).to receive(:send_event).with(headers: { 'X-GitHub-Event' => name }, params:)
+      allow(event_sender).to receive(:send_event).with(headers: { 'X-GitHub-Event' => name }, params: params)
     end
 
     it 'goes though the happy path' do
       github_processor.process(json_body)
 
-      expect(event_sender).to have_received(:send_event).with(headers: { 'X-GitHub-Event' => name }, params:)
+      expect(event_sender).to have_received(:send_event).with(headers: { 'X-GitHub-Event' => name }, params: params)
+    end
+
+    context 'with unknown event' do
+      let(:event_type) { 'whatever' }
+
+      it 'does not send an event' do
+        github_processor.process(json_body)
+
+        expect(event_sender).not_to have_received(:send_event)
+      end
     end
   end
 end

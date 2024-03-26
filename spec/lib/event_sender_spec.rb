@@ -19,7 +19,7 @@ describe EventSender do
       end
 
       it 'sends an event' do
-        event_sender.send_event(headers:, params:)
+        event_sender.send_event(headers: headers, params: params)
 
         expect(WebMock).to have_requested(:post, url)
           .with(body: JSON.dump(params), headers: {
@@ -42,7 +42,7 @@ describe EventSender do
       end
 
       it 'logs an error' do
-        event_sender.send_event(headers:, params:)
+        event_sender.send_event(headers: headers, params: params)
       end
     end
   end
