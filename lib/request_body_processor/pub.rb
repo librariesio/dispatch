@@ -3,7 +3,7 @@
 module RequestBodyProcessor
   class Pub
     def self.process_names(names)
-      names.map { |name| name.split(' ').last }.uniq
+      names.map { |name| name.split.last }.uniq
     end
   end
 end

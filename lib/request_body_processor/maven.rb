@@ -3,7 +3,7 @@
 module RequestBodyProcessor
   class Maven
     def self.process_names(names)
-      names.map { |name| name.split(' ')[0..1].join('') }.uniq
+      names.map { |name| name.split[0..1].join }.uniq
     end
   end
 end

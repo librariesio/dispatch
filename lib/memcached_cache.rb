@@ -3,8 +3,8 @@
 class MemcachedCache
   MEMCACHED_OPTIONS = {
     server: (ENV['MEMCACHIER_SERVERS'] || 'localhost:11211').split(','),
-    username: ENV['MEMCACHIER_USERNAME'],
-    password: ENV['MEMCACHIER_PASSWORD'],
+    username: ENV.fetch('MEMCACHIER_USERNAME', nil),
+    password: ENV.fetch('MEMCACHIER_PASSWORD', nil),
     failover: true,
     socket_timeout: 1.5,
     socket_failure_delay: 0.2
@@ -13,7 +13,7 @@ class MemcachedCache
   def self.client
     Dalli::Client.new(
       MEMCACHED_OPTIONS[:server],
-      MEMCACHED_OPTIONS.reject { |k, _v| k == :server }
+      MEMCACHED_OPTIONS.except(:server)
     )
   end
 end

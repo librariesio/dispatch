@@ -7,11 +7,13 @@ class GithubMessageFactory
   # a standard message from the parsed GH event.
   #
   # @return [GithubMessage]
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
   def self.build(json_body)
     data = JSON.parse(json_body)
 
     case data['type']
-    when 'RepositoryEvent'
+    when 'RepositoryEvent', 'ForkEvent'
       GithubMessage.new(
         name: 'repository',
         params: { 'repository' => { 'full_name' => data['repo']['name'] } }
@@ -29,11 +31,6 @@ class GithubMessageFactory
     when 'ReleaseEvent'
       GithubMessage.new(
         name: 'release',
-        params: { 'repository' => { 'full_name' => data['repo']['name'] } }
-      )
-    when 'ForkEvent'
-      GithubMessage.new(
-        name: 'repository',
         params: { 'repository' => { 'full_name' => data['repo']['name'] } }
       )
     when 'IssuesEvent'
@@ -72,11 +69,13 @@ class GithubMessageFactory
           'repository' => { 'full_name' => data['repo']['name'] }
         }
       )
-    else
+    else # rubocop:disable Style/EmptyElse
       # There are likely many more event types than what we are looking for.
       # That is not a failure condition.
 
       nil
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
 end
