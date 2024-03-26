@@ -10,10 +10,12 @@ gem 'simple-rss'
 gem 'zeitwerk'
 
 group :development do
-  gem 'rubocop', require: false
   gem 'rake'
+  gem 'rubocop', require: false
 end
 
 group :test do
   gem 'rspec'
+  gem 'vcr'
+  gem 'webmock'
 end

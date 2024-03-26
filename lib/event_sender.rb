@@ -8,15 +8,12 @@ class EventSender
   end
 
   def send_event(headers: {}, params: {})
-    RestClient.post(
+    DispatchClient.post(
       @url,
-      JSON.dump(params),
-      {
-        'Content-Type' => 'application/json',
-        'User-Agent' => 'Libraries.io Dispatch'
-      }.merge(headers)
+      params:,
+      headers:
     )
   rescue StandardError => e
-    puts "Error: #{@url} --> #{e}"
+    StructuredLog.capture('EVENT_SENDER_ERROR', { url: @url, message: e.message })
   end
 end

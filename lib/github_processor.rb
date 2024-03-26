@@ -21,7 +21,7 @@ class GithubProcessor
 
     @event_sender.send_event(
       headers: { 'X-GitHub-Event' => name },
-      params: params
+      params:
     )
   end
 end

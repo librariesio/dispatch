@@ -5,7 +5,7 @@ describe GithubMessageFactory do
     let(:json_body) { JSON.dump(body) }
     let(:repo_name) { 'repo_name' }
     let(:body) do
-      { "type" => "RepositoryEvent", "repo" => { "name" => repo_name } }
+      { 'type' => 'RepositoryEvent', 'repo' => { 'name' => repo_name } }
     end
 
     describe 'RepositoryEvent' do
@@ -19,7 +19,7 @@ describe GithubMessageFactory do
 
     describe 'WatchEvent' do
       let(:body) do
-        { "type" => "WatchEvent", "repo" => { "name" => repo_name } }
+        { 'type' => 'WatchEvent', 'repo' => { 'name' => repo_name } }
       end
 
       it 'constructs correctly' do
@@ -32,7 +32,7 @@ describe GithubMessageFactory do
 
     describe 'PublicEvent' do
       let(:body) do
-        { "type" => "PublicEvent", "repo" => { "name" => repo_name } }
+        { 'type' => 'PublicEvent', 'repo' => { 'name' => repo_name } }
       end
 
       it 'constructs correctly' do
@@ -45,7 +45,7 @@ describe GithubMessageFactory do
 
     describe 'ReleaseEvent' do
       let(:body) do
-        { "type" => "ReleaseEvent", "repo" => { "name" => repo_name } }
+        { 'type' => 'ReleaseEvent', 'repo' => { 'name' => repo_name } }
       end
 
       it 'constructs correctly' do
@@ -58,7 +58,7 @@ describe GithubMessageFactory do
 
     describe 'ForkEvent' do
       let(:body) do
-        { "type" => "ForkEvent", "repo" => { "name" => repo_name } }
+        { 'type' => 'ForkEvent', 'repo' => { 'name' => repo_name } }
       end
 
       it 'constructs correctly' do
@@ -72,10 +72,10 @@ describe GithubMessageFactory do
     describe 'IssuesEvent' do
       let(:body) do
         {
-          "type" => "IssuesEvent",
-          "payload" => { 'action' => 'action1', 'issue' => { 'number' => 1 } },
-          "repo" => { "id" => 2, "name" => repo_name },
-          "actor" => { "id" => 3 }
+          'type' => 'IssuesEvent',
+          'payload' => { 'action' => 'action1', 'issue' => { 'number' => 1 } },
+          'repo' => { 'id' => 2, 'name' => repo_name },
+          'actor' => { 'id' => 3 }
         }
       end
 
@@ -95,10 +95,10 @@ describe GithubMessageFactory do
     describe 'PullRequestEvent' do
       let(:body) do
         {
-          "type" => "PullRequestEvent",
-          "payload" => { 'action' => 'action1', 'pull_request' => { 'number' => 1 } },
-          "repo" => { "id" => 2, "name" => repo_name },
-          "actor" => { "id" => 3 }
+          'type' => 'PullRequestEvent',
+          'payload' => { 'action' => 'action1', 'pull_request' => { 'number' => 1 } },
+          'repo' => { 'id' => 2, 'name' => repo_name },
+          'actor' => { 'id' => 3 }
         }
       end
 
@@ -118,9 +118,9 @@ describe GithubMessageFactory do
     describe 'IssueCommentEvent' do
       let(:body) do
         {
-          "type" => "IssueCommentEvent",
-          "payload" => { 'issue' => { 'number' => 1 } },
-          "repo" => { "name" => repo_name },
+          'type' => 'IssueCommentEvent',
+          'payload' => { 'issue' => { 'number' => 1 } },
+          'repo' => { 'name' => repo_name }
         }
       end
 
@@ -138,9 +138,9 @@ describe GithubMessageFactory do
     describe 'CreateEvent' do
       let(:body) do
         {
-          "type" => "CreateEvent",
-          "payload" => { "ref_type" => 'ref1' },
-          "repo" => { "name" => repo_name },
+          'type' => 'CreateEvent',
+          'payload' => { 'ref_type' => 'ref1' },
+          'repo' => { 'name' => repo_name }
         }
       end
 
