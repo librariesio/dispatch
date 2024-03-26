@@ -22,6 +22,7 @@ EM.run do
   source.error { |e| puts "error #{e}" }
   source.start
 
+  # Package manager monitoring
   event_sender = EventSender.new(ENV['WATCHER_HOOK_URL'])
   cache = MemcachedCache.client
   names_cache = ProcessedPackageNamesCache.new(cache:)
