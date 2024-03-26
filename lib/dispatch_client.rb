@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 class DispatchClient
   def self.get(url)
     RestClient.get(url, 'User-Agent' => 'Libraries.io Watcher')

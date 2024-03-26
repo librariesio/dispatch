@@ -31,10 +31,10 @@ class PackageManagerService
     names_cache.cache_names(url: @url, names:) do |unprocessed_names|
       unprocessed_names.each { |name| block.call(name) }
     end
-  rescue DispatchClient::ClientError
+  rescue StandardError => e
     StructuredLog.capture(
       'PACKAGE_MANAGER_SERVICE_UPDATE_FAILURE',
-      { url: @url }
+      { url: @url, message: e.message }
     )
   end
 end

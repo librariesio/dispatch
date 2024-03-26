@@ -24,10 +24,6 @@ describe PackageManagerService do
     let(:name) { 'name' }
 
     before do
-      stub_request(:get, source_url).to_return_json(
-        body: [{ name: }]
-      )
-
       stub_request(:post, target_url).with(
         body: JSON.dump(platform:, name:)
       )
@@ -36,15 +32,42 @@ describe PackageManagerService do
       allow(cache).to receive(:set).with(source_url, [name])
     end
 
-    it 'happy path processes' do
-      package_manager_service.process(
-        sender:, names_cache:
-      )
+    context 'with successful request' do
+      before do
+        stub_request(:get, source_url).to_return_json(
+          body: [{ name: }]
+        )
+      end
 
-      expect(WebMock).to have_requested(:post, target_url).with(
-        body: JSON.dump(platform:, name:)
-      )
-      expect(cache).to have_received(:set).with(source_url, [name])
+      it 'happy path processes' do
+        package_manager_service.process(
+          sender:, names_cache:
+        )
+
+        expect(WebMock).to have_requested(:post, target_url).with(
+          body: JSON.dump(platform:, name:)
+        )
+        expect(cache).to have_received(:set).with(source_url, [name])
+      end
+    end
+
+    context 'with client error' do
+      before do
+        stub_request(:get, source_url).to_return(
+          status: 403
+        )
+      end
+
+      it 'happy path fails' do
+        package_manager_service.process(
+          sender:, names_cache:
+        )
+
+        expect(WebMock).not_to have_requested(:post, target_url).with(
+          body: JSON.dump(platform:, name:)
+        )
+        expect(cache).not_to have_received(:set).with(source_url, [name])
+      end
     end
   end
 end
