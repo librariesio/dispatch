@@ -1,4 +1,4 @@
-FROM ruby:2.5.0-alpine
+FROM ruby:3.2.3-alpine
 RUN apk add --update \
   build-base \
   && rm -rf /var/cache/apk/*
@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 ENV RACK_ENV production
 
 COPY Gemfile Gemfile.lock /usr/src/app/
-RUN bundle install --without test --jobs 2
+RUN bundle install --without test --without development --jobs 2
 
 COPY . /usr/src/app
 CMD ruby dispatch.rb
