@@ -1,0 +1,13 @@
+AllCops:
+  NewCops: enable
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: never
+
+Metrics/BlockLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
