@@ -1,6 +1,6 @@
 FROM ruby:3.2.3-alpine
 RUN apk add --update \
-  build-base \
+  build-base openssl-dev \
   && rm -rf /var/cache/apk/*
 
 # throw errors if Gemfile has been modified since Gemfile.lock
