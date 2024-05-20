@@ -2,12 +2,10 @@
 
 set -e
 
-REVISION=$(git show-ref origin/main | cut -c1-7)
+REVISION=$(git show-ref origin/main |cut -f 1 -d ' ')
+TAGGED_IMAGE=gcr.io/${GOOGLE_PROJECT}/dispatch:${REVISION}
+gcloud --quiet container images describe ${TAGGED_IMAGE} || { status=$?; echo "Container not finished building" >&2; exit $status; }
 
-echo "Verify ${REVISION} is pushed to Dockerhub before continuing!"
-read -p "Do you see it at https://hub.docker.com/r/librariesio/dispatch/builds [yN]" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-  kubectl set image deployment/dispatch-service dispatch-container=librariesio/dispatch:latest
-fi
+gcloud --quiet container images add-tag ${TAGGED_IMAGE} gcr.io/${GOOGLE_PROJECT}/dispatch:latest
+
+kubectl set image deployment/dispatch-service dispatch-container=${TAGGED_IMAGE}
