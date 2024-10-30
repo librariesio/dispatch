@@ -2,7 +2,6 @@
 
 Ruby app for reading latest updates from several package managers as well as GitHub:
 
-* CocoaPods
 * Hex
 * Hackage
 * CPAN

@@ -32,12 +32,6 @@ class Watcher
       request_parser: RequestParser::Rss,
       request_body_processor: RequestBodyProcessor::Pub
     ),
-    cocoapods: PackageManagerService.new(
-      url: 'http://cocoapods.libraries.io/feed.rss',
-      platform: 'CocoaPods',
-      request_parser: RequestParser::Rss,
-      request_body_processor: RequestBodyProcessor::Cocoapods
-    )
     # Service returning 403 forbidden as of 2024-03-26
     # mvnrepository: PackageManagerService.new(
     #  url: 'https://mvnrepository.com/feeds/rss2.0.xml',
